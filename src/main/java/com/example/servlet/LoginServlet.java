@@ -29,7 +29,9 @@ public class LoginServlet extends HttpServlet {
         String requestLogin = req.getParameter("login");
         String requestPassword = req.getParameter("password");
         List<String> users = Users.getInstance().getUsers();
-        if (!requestLogin.isEmpty() && users.contains(requestLogin) && !requestPassword.isEmpty() && !requestPassword.trim().isEmpty()) {
+        boolean isLoginRight = requestLogin != null && !requestLogin.isEmpty() && users.contains(requestLogin);
+        boolean isPasswordRight = requestPassword != null && !requestPassword.isEmpty() && !requestPassword.trim().isEmpty();
+        if (isLoginRight && isPasswordRight) {
             req.getRequestDispatcher("/user/hello.jsp").forward(req, resp);
             session.setAttribute("user", requestLogin);
         } else {
